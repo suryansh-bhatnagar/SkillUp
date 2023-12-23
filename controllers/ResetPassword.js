@@ -1,5 +1,7 @@
 const User = require("../models/User");
-const mailSender = require("../utils/mailSender");
+const { mailSender } = require("../utils/mailSender");
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 exports.resetPasswordToken = async (req, res) => {
 
@@ -49,9 +51,9 @@ exports.resetPassword = async (req, res) => {
             return res.status(401).json({ success: false, message: "Token is expired, please regenerate your token" });
         };
 
-        const hashedPassowrd = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        await User.findOneAndUpdate({ token }, { password: hashedPassowrd }, { new: true });
+        await User.findOneAndUpdate({ token }, { password: hashedPassword }, { new: true });
         return res.status(200).json({
             success: true, message: "Password reset successfully"
         })
@@ -61,8 +63,5 @@ exports.resetPassword = async (req, res) => {
             message: "Something went wrong while sending password reset link"
         })
     }
-
-
-
 
 }

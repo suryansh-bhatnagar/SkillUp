@@ -1,37 +1,41 @@
 const mongoose = require('mongoose');
-const { default: mailSender } = require('../utils/mailSender');
+const { mailSender } = require('../utils/mailSender');
 
 const OTPSchema = new mongoose.Schema({
 
     email: {
         type: String,
-        rewuired: true,
+        required: true,
     },
     otp: {
         type: String,
-        rewuired: true
+        required: true
     },
     createdAt: {
         type: Date,
         default: Date.now(),
-        expires: 5 * 60
+        expires: 30 * 60
     }
 
 })
 
-
+//  function to send emails
 const sendVerificationEmail = async (email, otp) => {
     try {
-        const mailResponse = await mailSender(email, "Verification Email from   Notion", otp);
-        console.log("Email send successfully", mailResponse);
+        const mailResponse = await mailSender(email, "Verification Email from Notion", otp);
+        console.log("Email send successfully");
     } catch (error) {
         console.log("Error occured while send verification email", error);
 
     }
 }
 
+// post-save hook to send email after the document has been saved
 OTPSchema.pre("save", async function (next) {
-    await sendVerificationEmail(this.email, this.otp);
+
+    if (this.isNew) {
+        await sendVerificationEmail(this.email, this.otp);
+    }
     next();
 })
 

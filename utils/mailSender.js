@@ -1,6 +1,6 @@
 const nodeMailer = require('nodemailer');
 
-const mailSender = async (email, title, body) => {
+exports.mailSender = async (email, title, body) => {
     try {
         let transporter = nodeMailer.createTransport({
             host: process.env.MAIL_HOST,
@@ -11,7 +11,7 @@ const mailSender = async (email, title, body) => {
         })
 
         let info = await transporter.sendMail({
-            from: 'StudyNotion - By Suryansh',
+            from: 'SkillUp - By Suryansh',
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`
@@ -22,5 +22,3 @@ const mailSender = async (email, title, body) => {
         console.log(error.message)
     }
 }
-
-export default mailSender

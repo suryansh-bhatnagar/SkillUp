@@ -12,8 +12,10 @@ exports.createCourse = async (req, res) => {
         //get thumbnail from files
         const thumbnail = req.files.thumbnail;
 
+        console.log('Thumbnail ', thumbnail);
+
         //validate 
-        if (courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbnail || category) {
+        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbnail || !category) {
             return res.status(400).json({
                 success: false,
                 message: "All files are required"
@@ -43,7 +45,7 @@ exports.createCourse = async (req, res) => {
 
         //upload image to  cloudinary
         const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
-
+        console.log('Cloudinary thumbnail ', thumbnailImage);
         //create new course entry in db
         const newCourse = await Course.create({
             courseName,
@@ -95,7 +97,7 @@ exports.getAllCourses = async (req, res) => {
             thumbnail: true,
             instructor: true,
             ratingAndReviews: true,
-            studentEnrolled: true
+            studentsEnrolled: true
         }).populate('instructor').exec()
 
 
@@ -110,5 +112,56 @@ exports.getAllCourses = async (req, res) => {
             success: false,
             message: error.message
         })
+    }
+}
+
+
+//getCourseDetails
+exports.getCourseDetails = async (req, res) => {
+    try {
+        //get id
+        const { courseId } = req.body;
+        //find course details
+        const courseDetails = await Course.find(
+            { _id: courseId })
+            .populate(
+                {
+                    path: "instructor",
+                    populate: {
+                        path: "additionalDetails",
+                    },
+                }
+            )
+            .populate("category")
+            //.populate("ratingAndreviews")
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection",
+                },
+            })
+            .exec();
+
+        //validation
+        if (!courseDetails) {
+            return res.status(400).json({
+                success: false,
+                message: `Could not find the course with ${courseId}`,
+            });
+        }
+        //return response
+        return res.status(200).json({
+            success: true,
+            message: "Course Details fetched successfully",
+            data: courseDetails,
+        })
+
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
     }
 }

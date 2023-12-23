@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    passowrd: {
+    password: {
         type: String,
         required: true
     },
@@ -24,6 +24,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['Admin', 'Student', 'Instructor'],
         required: true
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    approved: {
+        type: Boolean,
+        default: true,
     },
     additionalDetails: {
         type: mongoose.Schema.Types.ObjectId,
@@ -53,7 +61,7 @@ const userSchema = new mongoose.Schema({
 
         }
     ]
-
-})
+    // Add timestamps for when the document is created and last modified
+}, { timestamps: true })
 
 module.exports = mongoose.model('User', userSchema);

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const RatingsAndReviews = new mongoose.Schema({
 
     user: {
-        tpye: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },
@@ -13,7 +13,13 @@ const RatingsAndReviews = new mongoose.Schema({
     review: {
         type: String,
         required: true
-    }
+    },
+    course: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Course",
+        index: true,
+    },
 
 })
 
