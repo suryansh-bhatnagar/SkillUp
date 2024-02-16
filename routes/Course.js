@@ -8,7 +8,7 @@ const router = express.Router()
 const {
   createCourse,
   getAllCourses,
-  getCourseDetails,
+  getCourseDetails, getInstructorCourses, editCourse
 } = require("../../SkillUp/controllers/Course")
 
 
@@ -65,6 +65,10 @@ router.post("/addSubSection", auth, isInstructor, createSubSection)
 router.get("/getAllCourses", getAllCourses)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
+// Edit Course routes
+router.post("/editCourse", auth, isInstructor, editCourse)
+// Get all Courses Under a Specific Instructor
+router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

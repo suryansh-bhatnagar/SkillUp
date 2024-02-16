@@ -7,11 +7,16 @@ exports.createSubSection = async (req, res) => {
     try {
 
         //data fetch 
-        const { sectionId, title, timeDuration, description } = req.body;
-        const video = req.files.videoFile;
+        const { sectionId, title, description } = req.body;
+        const video = req.files.video;
 
+        console.log('Subsection pamars');
+        console.log(sectionId);
+        console.log(title);
+        console.log(description);
+        console.log(video);
         //validation 
-        if (!sectionId || !title || !timeDuration || !description || !video) {
+        if (!sectionId || !title || !description || !video) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -24,7 +29,7 @@ exports.createSubSection = async (req, res) => {
         //create subsection
         const SubSectionDetails = await SubSection.create({
             title,
-            timeDuration,
+            timeDuration: `${uploadDetails.duration}`,
             description,
             videoUrl: uploadDetails.secure_url
         })
