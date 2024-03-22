@@ -12,9 +12,9 @@ const {
 const {
   resetPasswordToken,
   resetPassword,
-} = require("../../SkillUp/controllers/ResetPassword")
+} = require("../controllers/ResetPassword")
 
-const { auth } = require("../../SkillUp/middlewares/auth")
+const { auth } = require("../middlewares/auth")
 
 // Routes for Login, Signup, and Authentication
 

@@ -9,7 +9,7 @@ const {
   createCourse,
   getAllCourses,
   getCourseDetails, getInstructorCourses, editCourse
-} = require("../../SkillUp/controllers/Course")
+} = require("../controllers/Course")
 
 
 // Categories Controllers Import
@@ -17,31 +17,31 @@ const {
   showAllCategories,
   createCategory,
   categoryPageDetails,
-} = require("../../SkillUp/controllers/Category")
+} = require("../controllers/Category")
 
 // Sections Controllers Import
 const {
   createSection,
   updateSection,
   deleteSection,
-} = require("../../SkillUp/controllers/Section")
+} = require("../controllers/Section")
 
 // Sub-Sections Controllers Import
 const {
   createSubSection,
   updateSubSection,
   deleteSubSection,
-} = require("../../SkillUp/controllers/Subsection")
+} = require("../controllers/Subsection")
 
 // Rating Controllers Import
 const {
   createRating,
   getAverageRating,
   getAllRating,
-} = require("../../SkillUp/controllers/RatingAndReview")
+} = require("../controllers/RatingAndReview")
 
 // Importing Middlewares
-const { auth, isInstructor, isStudent, isAdmin } = require("../../SkillUp/middlewares/auth")
+const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
 
 // ********************************************************************************************************
 //                                      Course routes
