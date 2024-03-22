@@ -1,9 +1,12 @@
 const nodeMailer = require('nodemailer');
+const dotenv = require("dotenv");
 
 exports.mailSender = async (email, title, body) => {
     try {
         let transporter = nodeMailer.createTransport({
-            host: smtp.ethereal.email,
+            host: process.env.MAIL_HOST,
+            port: 587,
+            secure: false,
             auth: {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASS
@@ -11,7 +14,7 @@ exports.mailSender = async (email, title, body) => {
         })
 
         let info = await transporter.sendMail({
-            from: 'SkillUp - By Suryansh',
+            from: { name: "SkillUp - By Suryansh", address: process.env.MAIL_USER },
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`
