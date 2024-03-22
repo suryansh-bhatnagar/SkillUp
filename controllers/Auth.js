@@ -173,7 +173,7 @@ exports.login = async (req, res) => {
             })
         }
 
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email }).populate('additionalDetails').exec();
 
         if (!user) {
             res.status(401).json({ success: false, message: "User not registered, please signup first" });

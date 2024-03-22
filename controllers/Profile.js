@@ -26,7 +26,7 @@ exports.updateProfile = async (req, res) => {
         profileDetails.dateOfBirth = dateOfBirth;
         await profileDetails.save();
         return res.status(200).json({
-            success: true, message: 'Profile updated successfully', data: section
+            success: true, message: 'Profile updated successfully', updatedUserDetails: profileDetails
         })
 
     } catch (error) {
