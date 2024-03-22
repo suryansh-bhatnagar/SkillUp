@@ -8,7 +8,7 @@ const {
   signup,
   sendotp,
   changePassword,
-} = require("../../SkillUp/controllers/Auth")
+} = require("../controllers/Auth")
 const {
   resetPasswordToken,
   resetPassword,

@@ -9,7 +9,7 @@ require("dotenv").config();
 
 
 
-module.exports.sendotp = async (req, res) => {
+exports.sendotp = async (req, res) => {
     try {
 
         const { email } = req.body;
@@ -67,7 +67,7 @@ module.exports.sendotp = async (req, res) => {
 
 }
 
-module.exports.signup = async (req, res) => {
+exports.signup = async (req, res) => {
 
 
     try {
@@ -158,7 +158,7 @@ module.exports.signup = async (req, res) => {
 }
 
 
-module.exports.login = async (req, res) => {
+exports.login = async (req, res) => {
 
     try {
 
@@ -173,7 +173,7 @@ module.exports.login = async (req, res) => {
             })
         }
 
-        const user = await User.findOne({ email: email }).populate('additionalDetails').exec();
+        const user = await User.findOne({ email: email });
 
         if (!user) {
             res.status(401).json({ success: false, message: "User not registered, please signup first" });
@@ -222,7 +222,7 @@ module.exports.login = async (req, res) => {
 }
 
 // Controller for Changing Password
-module.exports.changePassword = async (req, res) => {
+exports.changePassword = async (req, res) => {
     try {
         // Get user data from req.user
         const userDetails = await User.findById(req.user.id);
