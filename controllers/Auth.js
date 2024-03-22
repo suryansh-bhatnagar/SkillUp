@@ -9,7 +9,7 @@ require("dotenv").config();
 
 
 
-exports.sendotp = async (req, res) => {
+module.exports.sendotp = async (req, res) => {
     try {
 
         const { email } = req.body;
@@ -67,7 +67,7 @@ exports.sendotp = async (req, res) => {
 
 }
 
-exports.signup = async (req, res) => {
+module.exports.signup = async (req, res) => {
 
 
     try {
@@ -158,7 +158,7 @@ exports.signup = async (req, res) => {
 }
 
 
-exports.login = async (req, res) => {
+module.exports.login = async (req, res) => {
 
     try {
 
@@ -222,7 +222,7 @@ exports.login = async (req, res) => {
 }
 
 // Controller for Changing Password
-exports.changePassword = async (req, res) => {
+module.exports.changePassword = async (req, res) => {
     try {
         // Get user data from req.user
         const userDetails = await User.findById(req.user.id);
